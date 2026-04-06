@@ -141,6 +141,8 @@ export default function VenueDetailScreen({ route, navigation }) {
               <View style={styles.mapContainer}>
                 <MapView
                   style={styles.map}
+                  showsUserLocation={true}
+                  showsMyLocationButton={true}
                   initialRegion={{
                     latitude: venue.latitude,
                     longitude: venue.longitude,

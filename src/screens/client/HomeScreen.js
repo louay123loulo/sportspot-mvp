@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, FlatList, StyleSheet, StatusBar } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -6,6 +6,19 @@ import { colors } from '../../theme/colors';
 import { spacing, borderRadius } from '../../theme/spacing';
 import VenueCard from '../../components/VenueCard';
 import { mockVenues } from '../../data/mockVenues';
+import * as Location from 'expo-location';
+
+function calculateDistance(lat1, lon1, lat2, lon2) {
+  const R = 6371; // Radius of the earth in km
+  const dLat = (lat2 - lat1) * (Math.PI / 180);
+  const dLon = (lon2 - lon1) * (Math.PI / 180);
+  const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const d = R * c; 
+  return Math.round(d * 10) / 10;
+}
 
 const SPORTS = [
   { id: 'all', label: 'Tous', icon: 'apps' },
@@ -17,14 +30,33 @@ export default function HomeScreen({ navigation }) {
   const [selectedSport, setSelectedSport] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
 
-  const filteredVenues = mockVenues.filter((v) => {
+  const [userLocation, setUserLocation] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') return;
+      let location = await Location.getCurrentPositionAsync({});
+      setUserLocation(location.coords);
+    })();
+  }, []);
+
+  // Compute live venues
+  const liveVenues = mockVenues.map(v => {
+    if (userLocation && v.latitude && v.longitude) {
+      return { ...v, distance: calculateDistance(userLocation.latitude, userLocation.longitude, v.latitude, v.longitude) };
+    }
+    return v;
+  });
+
+  const filteredVenues = liveVenues.filter((v) => {
     const matchesSport = selectedSport === 'all' || v.sport === selectedSport;
     const matchesSearch = v.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       v.address.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesSport && matchesSearch;
   });
 
-  const popularVenues = mockVenues.filter((v) => v.rating >= 4.7);
+  const popularVenues = liveVenues.filter((v) => v.rating >= 4.7);
 
   const renderHeader = () => (
     <View>
