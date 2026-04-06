@@ -45,13 +45,7 @@ function RoleSelectorScreen({ navigation }) {
           <Ionicons name="chevron-forward" size={20} color={colors.textMuted} />
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('AdminTabs')}>
-          <View style={[styles.iconContainer, { backgroundColor: 'rgba(255,183,77,0.1)' }]}>
-            <Ionicons name="settings" size={24} color={colors.warning} />
-          </View>
-          <Text style={styles.btnText}>Dashboard Admin</Text>
-          <Ionicons name="chevron-forward" size={20} color={colors.textMuted} />
-        </TouchableOpacity>
+
       </View>
     </SafeAreaView>
   );

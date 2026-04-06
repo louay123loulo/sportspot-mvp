@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { View, Text, Image, ScrollView, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { colors } from '../../theme/colors';
@@ -132,6 +133,30 @@ export default function VenueDetailScreen({ route, navigation }) {
               ))}
             </View>
           </View>
+
+          {/* Map Location */}
+          {venue.latitude && venue.longitude && (
+            <View style={styles.section}>
+              <Text style={styles.sectionTitle}>Localisation ({venue.distance} km)</Text>
+              <View style={styles.mapContainer}>
+                <MapView
+                  style={styles.map}
+                  initialRegion={{
+                    latitude: venue.latitude,
+                    longitude: venue.longitude,
+                    latitudeDelta: 0.04,
+                    longitudeDelta: 0.04,
+                  }}
+                >
+                  <Marker
+                    coordinate={{ latitude: venue.latitude, longitude: venue.longitude }}
+                    title={venue.name}
+                    description={venue.address}
+                  />
+                </MapView>
+              </View>
+            </View>
+          )}
 
           {/* Date Selector */}
           <View style={styles.section}>
@@ -349,6 +374,17 @@ const styles = StyleSheet.create({
     color: colors.primaryLight,
     fontSize: 13,
     fontWeight: '600',
+  },
+  mapContainer: {
+    height: 180,
+    borderRadius: borderRadius.lg,
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  map: {
+    width: '100%',
+    height: '100%',
   },
   dateList: {
     gap: 10,

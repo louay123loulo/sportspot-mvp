@@ -36,10 +36,18 @@ export default function VenueCard({ venue, onPress }) {
             <Text style={styles.address} numberOfLines={1}>{venue.address}</Text>
           </View>
           <View style={styles.footer}>
-            <View style={styles.ratingRow}>
-              <Ionicons name="star" size={14} color="#FFD700" />
-              <Text style={styles.rating}>{venue.rating}</Text>
-              <Text style={styles.reviewCount}>({venue.reviewCount})</Text>
+            <View style={styles.footerLeft}>
+              <View style={styles.ratingRow}>
+                <Ionicons name="star" size={14} color="#FFD700" />
+                <Text style={styles.rating}>{venue.rating}</Text>
+                <Text style={styles.reviewCount}>({venue.reviewCount})</Text>
+              </View>
+              {venue.distance && (
+                <View style={styles.distanceRow}>
+                  <Ionicons name="navigate" size={12} color={colors.primary} />
+                  <Text style={styles.distanceText}>{venue.distance} km</Text>
+                </View>
+              )}
             </View>
             <View style={styles.timeRow}>
               <Ionicons name="time-outline" size={13} color={colors.textMuted} />
@@ -147,6 +155,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  footerLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   ratingRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -161,6 +173,21 @@ const styles = StyleSheet.create({
     color: colors.textMuted,
     fontSize: 12,
     marginLeft: 3,
+  },
+  distanceRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 230, 118, 0.1)',
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 6,
+    marginLeft: 8,
+  },
+  distanceText: {
+    color: colors.primary,
+    fontSize: 11,
+    fontWeight: '700',
+    marginLeft: 4,
   },
   timeRow: {
     flexDirection: 'row',
