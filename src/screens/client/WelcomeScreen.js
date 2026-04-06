@@ -30,7 +30,7 @@ export default function WelcomeScreen({ navigation }) {
               <Ionicons name="football" size={40} color={colors.textInverse} />
             </LinearGradient>
           </View>
-          <Text style={styles.appName}>SportSpot</Text>
+          <Text style={styles.appName}>MOVA</Text>
           <Text style={styles.tagline}>Réserve ton terrain en un clic</Text>
         </View>
 

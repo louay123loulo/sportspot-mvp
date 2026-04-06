@@ -42,7 +42,7 @@ export default function LoginScreen({ navigation }) {
             <Text style={styles.subtitle}>
               {isLogin
                 ? 'Content de te revoir ! 👋'
-                : 'Rejoins la communauté SportSpot'}
+                : 'Rejoins la communauté MOVA'}
             </Text>
           </View>
 

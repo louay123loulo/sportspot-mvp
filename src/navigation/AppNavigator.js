@@ -25,7 +25,7 @@ function RoleSelectorScreen({ navigation }) {
       <View style={styles.content}>
         <View style={styles.header}>
           <Ionicons name="football" size={48} color={colors.primary} />
-          <Text style={styles.title}>SportSpot MVP</Text>
+          <Text style={styles.title}>MOVA</Text>
           <Text style={styles.subtitle}>Choisissez un rôle pour la démo</Text>
         </View>
 

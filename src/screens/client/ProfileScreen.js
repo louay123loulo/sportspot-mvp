@@ -75,7 +75,7 @@ export default function ProfileScreen({ navigation }) {
           <Text style={styles.logoutText}>Se déconnecter</Text>
         </TouchableOpacity>
 
-        <Text style={styles.version}>SportSpot v1.0.0 MVP</Text>
+        <Text style={styles.version}>MOVA v1.0.0 MVP</Text>
       </ScrollView>
     </View>
   );
